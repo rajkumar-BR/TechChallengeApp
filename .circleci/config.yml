@@ -26,7 +26,8 @@ jobs:
       - run: go build -v
       - run: go test -v -race -cover ./...
       - run: sudo apt-get update
-      - run: sudo apt-get install postgresql-client-9.5
+      - run: sudo apt-get install postgresql-client-9.6
+      - run: whoami     
       - run:
           name: Waiting for Postgres to be ready
           command: dockerize -wait tcp://localhost:5432 -timeout 1m
