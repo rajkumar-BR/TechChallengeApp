@@ -137,24 +137,24 @@ jobs:
 
             zip -r "output/TechChallengeApp_${version}_win32.zip" dist/*
 
-      - run:
-          name: Release if new version
-          command: |
-            export version=$(cat versionfile)
-            echo $version
-            export tagvalue=$(git tag | grep ${version})
-            export prerelease=$(echo ${version} | grep 'pre-release')
-            if [ -z "${tagvalue}" ]; then
-              go get github.com/tcnksm/ghr
+      # - run:
+      #     name: Release if new version
+      #     command: |
+      #       export version=$(cat versionfile)
+      #       echo $version
+      #       export tagvalue=$(git tag | grep ${version})
+      #       export prerelease=$(echo ${version} | grep 'pre-release')
+      #       if [ -z "${tagvalue}" ]; then
+      #         go get github.com/tcnksm/ghr
 
-              if [ -z "${prerelease}" ]; then
-                echo "No pre-release in version, creating release"
-                ghr -u servian ${version} output
-              else
-                echo "Found pre-release in version, creating pre-release"
-                ghr -u servian -prerelease ${version} output
-              fi
-            fi
+      #         if [ -z "${prerelease}" ]; then
+      #           echo "No pre-release in version, creating release"
+      #           ghr -u servian ${version} output
+      #         else
+      #           echo "Found pre-release in version, creating pre-release"
+      #           ghr -u servian -prerelease ${version} output
+      #         fi
+      #       fi
 
       - store_artifacts:
           path: output
