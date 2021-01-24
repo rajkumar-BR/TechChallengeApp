@@ -4,7 +4,7 @@
 orbs:
   # https://circleci.com/developer/orbs/orb/circleci/aws-ecr
     aws-ecr: circleci/aws-ecr@6.15.2
-version: 2
+version: 2.1
 jobs:
   build:
     working_directory: /go/src/github.com/servian/TechChallengeApp
@@ -169,12 +169,21 @@ workflows:
       - build
       - deploy
       - aws-ecr/build-and-push-image:
-          repo: "techchallengeapp"
-          tag: "latest,v0.1.${CIRCLE_BUILD_NUM}"
+          account-url: AWS_ECR_ACCOUNT_URL
+          aws-access-key-id: AWS_ACCESS_KEY_ID
+          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
           dockerfile: Dockerfile
           path: .
-          requires:
-            - deploy
+          region: AWS_REGION
+          repo: techchallengeapp
+          tag: 'latest,v0.1.${CIRCLE_BUILD_NUM}"'
+      # - aws-ecr/build-and-push-image:
+      #     repo: "techchallengeapp"
+      #     tag: "latest,v0.1.${CIRCLE_BUILD_NUM}"
+      #     dockerfile: Dockerfile
+      #     path: .
+      #     requires:
+      #       - deploy
         
         # Envs: AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_REGION, AWS_ECR_ACCOUNT_URL
           
