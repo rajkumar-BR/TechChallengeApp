@@ -28,10 +28,13 @@ jobs:
       - run:
           name: Waiting for Postgres to be ready
           command: dockerize -wait tcp://localhost:5432 -timeout 1m
-
-     
-
-
+      - run: |
+          psql \
+          -c "CREATE TABLE testdata (name char(25));"
+      - run: |
+          psql \
+          -c "INSERT INTO testdata VALUES ('Raj'), ('Lohit'), ('Pradyun');"
+          
   deploy:
     working_directory: /go/src/github.com/servian/TechChallengeApp
     docker:
