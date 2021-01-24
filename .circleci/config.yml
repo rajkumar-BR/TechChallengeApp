@@ -177,6 +177,7 @@ workflows:
           path: .
           region: AWS_REGION
           repo: techchallengeapp
+          skip-when-tags-exist: false
           tag: 'latest,v0.1.${CIRCLE_BUILD_NUM}"'
       # - aws-ecr/build-and-push-image:
       #     repo: "techchallengeapp"

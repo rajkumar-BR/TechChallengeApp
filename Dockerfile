@@ -20,18 +20,18 @@ RUN go mod tidy
 
 COPY . .
 
-RUN go build -o /techchallengeapp 
+RUN go build -o /TechChallengeApp
 RUN swagger generate spec -o /swagger.json
 
 FROM alpine:latest
 
-WORKDIR /techchallengeapp 
+WORKDIR /TechChallengeApp
 
 COPY assets ./assets
 COPY conf.toml ./conf.toml
 
 COPY --from=build /tmp/swagger/dist ./assets/swagger
 COPY --from=build /swagger.json ./assets/swagger/swagger.json
-COPY --from=build /techchallengeapp  techchallengeapp 
+COPY --from=build /TechChallengeApp TechChallengeApp
 
-ENTRYPOINT [ "./techchallengeapp " ]
+ENTRYPOINT [ "./TechChallengeApp" ]
