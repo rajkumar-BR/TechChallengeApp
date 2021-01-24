@@ -26,21 +26,10 @@ jobs:
       - run: go build -v
       - run: go test -v -race -cover ./...
       - run:
-          name: Start service
-          environment:
-            CONTACTS_DB_URL: "postgres://circleci-demo-go@localhost:5432/circle_test?sslmode=disable"
-            CONTACTS_DB_MIGRATIONS: /go/src/github.com/CircleCI-Public/circleci-demo-go/db/migrations
-          command: ./workdir/contacts
-          background: true
+          name: Waiting for Postgres to be ready
+          command: dockerize -wait tcp://localhost:5432 -timeout 1m
 
-      - run:
-          name: Validate service is working
-          command: |
-            sleep 5
-            curl --retry 10 --retry-delay 1 -X POST --header "Content-Type: application/json" -d '{"email":"test@example.com","name":"Test User"}' http://localhost:8080/contacts
-      # - store_artifacts:
-      #     path: /tmp/test-results
-      #     destination: raw-test-output
+     
 
 
   deploy:
