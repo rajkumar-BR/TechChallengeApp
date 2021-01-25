@@ -28,7 +28,7 @@ jobs:
       - run: go build -v
       - run: go test -v -race -cover ./...
       - run: sudo apt-get update
-      - run: sudo apt-get install postgresql-client-9.6
+      - run: sudo apt-get install postgresql-client
       - run: whoami     
       - run:
           name: Waiting for Postgres to be ready
