@@ -34,6 +34,9 @@ jobs:
       - run: sudo apt-get install postgresql-client
       - run: whoami     
       - run:
+          name: Install local dependencies
+          command: npm install
+      - run:
           name: Waiting for Postgres to be ready
           command: dockerize -wait tcp://localhost:5432 -timeout 1m
       - run: |
