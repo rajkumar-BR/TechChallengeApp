@@ -34,23 +34,20 @@ jobs:
       - run: sudo apt-get install postgresql-client
       - run: whoami     
       - run:
-          name: Install local dependencies
-          command: npm install
-      - run:
           name: Waiting for Postgres to be ready
           command: dockerize -wait tcp://localhost:5432 -timeout 1m
-      - run: |
-          psql \
-          -d $TEST_DATABASE_URL \
-          -c "CREATE TABLE testdata (name char(25));"
-      - run: |
-          psql \
-          -d $TEST_DATABASE_URL \
-          -c "INSERT INTO testdata VALUES ('Apple'), ('Microsoft'), ('Servian');"
-      - run: |
-          psql \
-          -d $TEST_DATABASE_URL \
-          -c "SELECT * from testdata"
+      # - run: |
+      #     psql \
+      #     -d $TEST_DATABASE_URL \
+      #     -c "CREATE TABLE testdata (name char(25));"
+      # - run: |
+      #     psql \
+      #     -d $TEST_DATABASE_URL \
+      #     -c "INSERT INTO testdata VALUES ('Apple'), ('Microsoft'), ('Servian');"
+      # - run: |
+      #     psql \
+      #     -d $TEST_DATABASE_URL \
+      #     -c "SELECT * from testdata"
           
   deploy:
     working_directory: /go/src/github.com/servian/TechChallengeApp
