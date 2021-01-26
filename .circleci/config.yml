@@ -4,7 +4,7 @@
 orbs:
   # https://circleci.com/developer/orbs/orb/circleci/aws-ecr
     aws-ecr: circleci/aws-ecr@6.15.2
-    aws-ecs: circleci/aws-ecs@0.0.10
+    aws-ecs: circleci/aws-ecs@0.0.11
 
 version: 2.1
 jobs:
@@ -212,22 +212,16 @@ workflows:
           skip-when-tags-exist: false
           tag: 'latest,v0.1.${CIRCLE_BUILD_NUM}'
 
-      - aws-ecs/deploy-service-update:
-          requires:
-            - aws-ecr/build-and-push-image
-          family: 'techchallengeapp-service'
-          cluster-name: 'techchallengeapp-cluster'
-          container-image-name-updates: 'container=techchallengeapp-service,tag=${CIRCLE_SHA1}'
+          # ECS deploy
 
-      # - aws-ecr/build-and-push-image:
-      #     repo: "techchallengeapp"
-      #     tag: "latest,v0.1.${CIRCLE_BUILD_NUM}"
-      #     dockerfile: Dockerfile
-      #     path: .
+      # - aws-ecs/deploy-service-update:
       #     requires:
-      #       - deploy
-        
-        # Envs: AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_REGION, AWS_ECR_ACCOUNT_URL
+      #       - aws-ecr/build-and-push-image
+      #     family: 'techchallengeapp-service'
+      #     cluster-name: 'techchallengeapp-cluster'
+      #     container-image-name-updates: 'container=techchallengeapp-service,tag=${CIRCLE_SHA1}'
+
+    
           
                 
             
